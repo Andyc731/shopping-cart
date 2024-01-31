@@ -6,9 +6,11 @@ import Products from "./components/Products";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
+import ProductInfo from "./components/ProductInfo";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,7 +31,7 @@ function App() {
         className="h-screen grid"
         style={{ gridTemplateRows: "80px 1fr 280px" }}
       >
-        <Header></Header>
+        <Header cartItems={cartItems} setCartItems={setCartItems}></Header>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -38,6 +40,12 @@ function App() {
           />
           <Route path="/about" element={<About />}></Route>
           <Route path="*" element={<Navigate to="/" />}></Route>
+          <Route
+            path="/products/:id"
+            element={
+              <ProductInfo products={products} setCartItems={setCartItems} />
+            }
+          ></Route>
         </Routes>
         <Footer></Footer>
       </div>
