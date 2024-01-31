@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
 
-function Header() {
+function Header(props) {
   return (
     <header className="flex justify-between bg-purple-300">
       <Link to="/">
@@ -19,7 +19,10 @@ function Header() {
         </li>
       </ul>
       <div>
-        <Cart></Cart>
+        <Cart
+          cartItems={props.cartItems}
+          setCartItems={props.setCartItems}
+        ></Cart>
       </div>
     </header>
   );
