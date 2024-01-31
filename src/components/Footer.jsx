@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="grid grid-cols-4">
-      <aside>
+    <footer className="grid grid-cols-5 p-10 gap-10 bg-black text-white">
+      <aside className="col-span-2">
         <div>logo</div>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, cumque
