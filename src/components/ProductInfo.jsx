@@ -6,6 +6,7 @@ function ProductInfo(props) {
   const product = props.products[params.id - 1];
 
   const [value, setValue] = useState(1);
+  const submitButton = useRef();
 
   function submitHandler(event) {
     event.preventDefault();
@@ -14,6 +15,14 @@ function ProductInfo(props) {
       ...prevCart,
       { ...product, quantity: value, totalPrice: product.price * value },
     ]);
+
+    console.log("blah");
+    submitButton.current.innerHTML = "&#10003;";
+    submitButton.current.disabled = true;
+    setTimeout(() => {
+      submitButton.current.disabled = false;
+      submitButton.current.innerHTML = "Add to Cart";
+    }, 2000);
   }
 
   function handleChange(event) {
@@ -37,7 +46,12 @@ function ProductInfo(props) {
               max={5}
             />
             <p>${product.price * value}</p>
-            <button>Add to Cart</button>
+            <button
+              ref={submitButton}
+              className="w-32 bg-blue-300 rounded-lg p-2"
+            >
+              Add to Cart
+            </button>
           </form>
         </div>
       </div>
