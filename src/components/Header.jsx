@@ -3,11 +3,11 @@ import Cart from "./Cart";
 
 function Header(props) {
   return (
-    <header className="flex justify-between bg-purple-300">
+    <header className="flex justify-between bg-purple-300 items-center">
       <Link to="/">
         <div>logo</div>
       </Link>
-      <ul className="flex gap-x-3">
+      <ul className="flex gap-x-3 ml-auto mr-10">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -18,7 +18,7 @@ function Header(props) {
           <Link to="/about">About Us</Link>
         </li>
       </ul>
-      <div>
+      <div className="m-10">
         <Cart
           cartItems={props.cartItems}
           setCartItems={props.setCartItems}
