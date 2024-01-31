@@ -4,9 +4,11 @@ import { useRef, useEffect, useState } from "react";
 function Cart(props) {
   const modal = useRef();
   const [totalPrice, setTotalPrice] = useState([]);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   function showModal() {
     modal.current.showModal();
+    setIsDialogVisible(true);
   }
 
   useEffect(() => {
@@ -18,13 +20,15 @@ function Cart(props) {
         event.clientY < dialogDimensions.top ||
         event.clientY > dialogDimensions.bottom
       ) {
-        modal.current.close();
+        setIsDialogVisible(false);
+        setTimeout(() => {
+          modal.current.close();
+        }, 200);
       }
     });
   }, []);
 
   useEffect(() => {
-    console.log(totalPrice);
     if (props.cartItems && props.cartItems.length > 0) {
       const total = props.cartItems.reduce(
         (acc, current) => acc + current.totalPrice,
@@ -36,8 +40,22 @@ function Cart(props) {
 
   return (
     <div>
-      <div onClick={showModal}>blah</div>
-      <dialog ref={modal} className="h-full max-h-full flex-end ml-auto mr-0">
+      <div onClick={showModal} className="cursor-pointer">
+        <img
+          src="/src/assets/shopping-cart.svg"
+          alt=""
+          className="w-9 z-0 relative"
+        />
+        <div className="-mt-4 ml-5 bg-red-500 rounded-full text-center p-1 w-5 h-5 flex justify-center items-center text-xs z-50 relative">
+          {props.cartItems.length}
+        </div>
+      </div>
+      <dialog
+        ref={modal}
+        className={`h-full max-h-full flex-end ml-auto mr-0 transition-transform ${
+          isDialogVisible ? "" : "transform translate-x-full"
+        }`}
+      >
         {props.cartItems.map((item, index) => {
           return (
             <div key={index}>
