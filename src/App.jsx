@@ -1,19 +1,44 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Content from "./components/Content";
+import Products from "./components/Products";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
-      <div className="flex flex-col h-screen justify-between">
+      <div
+        className="h-screen grid"
+        style={{ gridTemplateRows: "80px 1fr 280px" }}
+      >
         <Header></Header>
-        <Content></Content>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/products"
+            element={<Products products={products} setProducts={setProducts} />}
+          />
+          <Route path="/about" element={<About />}></Route>
+          <Route path="*" element={<Navigate to="/" />}></Route>
+        </Routes>
         <Footer></Footer>
       </div>
     </>
