@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
-function Cart() {
+function Cart(props) {
   const modal = useRef();
+  const [totalPrice, setTotalPrice] = useState([]);
 
   function showModal() {
     modal.current.showModal();
@@ -22,11 +23,34 @@ function Cart() {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(totalPrice);
+    if (props.cartItems && props.cartItems.length > 0) {
+      const total = props.cartItems.reduce(
+        (acc, current) => acc + current.totalPrice,
+        0
+      );
+      setTotalPrice(total);
+    }
+  }, [props.cartItems]);
+
   return (
     <div>
       <div onClick={showModal}>blah</div>
       <dialog ref={modal} className="h-full max-h-full flex-end ml-auto mr-0">
-        blah
+        {props.cartItems.map((item, index) => {
+          return (
+            <div key={index}>
+              <img src={item.image} alt="" />
+              <h4>{item.title}</h4>
+              <p>{item.price}</p>
+              <p>{item.quantity}</p>
+              <p>{item.totalPrice}</p>
+            </div>
+          );
+        })}
+
+        {props.cartItems && <p>{totalPrice}</p>}
       </dialog>
     </div>
   );
