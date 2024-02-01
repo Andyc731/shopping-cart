@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 
 function Cart(props) {
   const modal = useRef();
-  const [totalPrice, setTotalPrice] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   function showModal() {
@@ -38,6 +38,29 @@ function Cart(props) {
     }
   }, [props.cartItems]);
 
+  function deleteItem(e, index) {
+    const updatedCart = [...props.cartItems];
+    updatedCart.splice(index, 1);
+    props.setCartItems(updatedCart);
+  }
+
+  function quantityChange(e, index) {
+    const maxQuantity = 5;
+    const minQuantity = 1;
+
+    if (e.target.value > maxQuantity) e.target.value = maxQuantity;
+    if (e.target.value < minQuantity) e.target.value = minQuantity;
+    const value = e.target.value;
+
+    const updatedCart = [...props.cartItems];
+    updatedCart[index] = {
+      ...updatedCart[index],
+      quantity: value,
+      totalPrice: value * updatedCart[index].price,
+    };
+    props.setCartItems(updatedCart);
+  }
+
   return (
     <div>
       <div onClick={showModal} className="cursor-pointer">
@@ -52,23 +75,58 @@ function Cart(props) {
       </div>
       <dialog
         ref={modal}
-        className={`h-full max-h-full flex-end ml-auto mr-0 transition-transform ${
+        className={`h-full max-h-full ml-auto mr-0 w-1/4 transition-all ${
           isDialogVisible ? "" : "transform translate-x-full"
         }`}
       >
-        {props.cartItems.map((item, index) => {
-          return (
-            <div key={index}>
-              <img src={item.image} alt="" />
-              <h4>{item.title}</h4>
-              <p>{item.price}</p>
-              <p>{item.quantity}</p>
-              <p>{item.totalPrice}</p>
-            </div>
-          );
-        })}
-
-        {props.cartItems && <p>{totalPrice}</p>}
+        <div className="flex flex-col items-center">
+          {props.cartItems.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="flex justify-around shadow-lg w-11/12 m-5 relative p-4"
+              >
+                <img src={item.image} alt="" className="w-1/4" />
+                <div>
+                  <button
+                    className="absolute top-0 right-4"
+                    onClick={(e) => deleteItem(e, index)}
+                  >
+                    X
+                  </button>
+                  <h4>{item.title}</h4>
+                  <div className="flex justify-between">
+                    <p>Per:</p>
+                    <p>${item.price}</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Quantity:</p>
+                    <input
+                      type="number"
+                      onChange={(e) => quantityChange(e, index)}
+                      className="appearance-none w-9"
+                      style={{
+                        direction: "rtl",
+                      }}
+                      value={item.quantity}
+                    />
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Total:</p>
+                    <p>${item.totalPrice}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className="flex justify-between w-9/12 mt-4">
+            <p>Subtotal:</p>
+            <p className="">${totalPrice}</p>
+          </div>
+          <button className="w-3/4 bg-green-400 rounded-lg h-12 m-4">
+            Checkout
+          </button>
+        </div>
       </dialog>
     </div>
   );
