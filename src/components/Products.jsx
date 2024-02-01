@@ -26,7 +26,7 @@ function Products(props) {
             return (
               <Link
                 key={index}
-                to={`/products/${index + 1}`}
+                to={`/products/${item.id}`}
                 className="w-60 flex flex-col justify-between p-3 shadow-xl"
               >
                 <img src={item.image} alt="" className="h-60 object-contain" />
