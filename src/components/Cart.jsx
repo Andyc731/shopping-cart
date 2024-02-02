@@ -79,46 +79,49 @@ function Cart(props) {
           isDialogVisible ? "" : "transform translate-x-full"
         }`}
       >
-        <div className="flex flex-col items-center">
-          {props.cartItems.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className="flex justify-around shadow-lg w-11/12 m-5 relative p-4"
-              >
-                <img src={item.image} alt="" className="w-1/4" />
-                <div>
-                  <button
-                    className="absolute top-0 right-4"
-                    onClick={(e) => deleteItem(e, index)}
-                  >
-                    X
-                  </button>
-                  <h4>{item.title}</h4>
-                  <div className="flex justify-between">
-                    <p>Per:</p>
-                    <p>${item.price}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p>Quantity:</p>
-                    <input
-                      type="number"
-                      onChange={(e) => quantityChange(e, index)}
-                      className="appearance-none w-9"
-                      style={{
-                        direction: "rtl",
-                      }}
-                      value={item.quantity}
-                    />
-                  </div>
-                  <div className="flex justify-between">
-                    <p>Total:</p>
-                    <p>${item.totalPrice}</p>
+        <div className="flex flex-col items-center justify-between min-h-full">
+          <h2>Cart</h2>
+          <div className="mb-auto">
+            {props.cartItems.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex justify-around shadow-lg w-11/12 m-5 relative p-4 items-center"
+                >
+                  <img src={item.image} alt="" className="w-1/4" />
+                  <div>
+                    <button
+                      className="absolute top-0 right-4"
+                      onClick={(e) => deleteItem(e, index)}
+                    >
+                      X
+                    </button>
+                    <h4 className="w-48 h-6 overflow-hidden">{item.title}</h4>
+                    <div className="flex justify-between">
+                      <p>Per:</p>
+                      <p>${item.price}</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Quantity:</p>
+                      <input
+                        type="number"
+                        onChange={(e) => quantityChange(e, index)}
+                        className="appearance-none w-9"
+                        style={{
+                          direction: "rtl",
+                        }}
+                        value={item.quantity}
+                      />
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Total:</p>
+                      <p>${item.totalPrice}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
           <div className="flex justify-between w-9/12 mt-4">
             <p>Subtotal:</p>
             <p className="">${totalPrice}</p>
