@@ -26,30 +26,57 @@ function ProductInfo(props) {
     }, TIMEOUT_OFFSET);
   }
 
-  function handleChange(event) {
-    setValue(event.target.value);
+  function upButtonHandler() {
+    if (value < 5) setValue((prevValue) => prevValue + 1);
+  }
+
+  function downButtonHandler() {
+    if (value > 1) setValue((prevValue) => prevValue - 1);
   }
 
   return (
     product && (
-      <div>
-        <img src={product.image} alt="" />
-        <div>
-          <h4>{product.title}</h4>
-          <p>{product.description}</p>
-          <p>${product.price}</p>
+      <div className="flex w-9/12 ml-auto mr-auto p-10 items-center justify-around relative">
+        <img src={product.image} alt="" className="w-1/3 object-contain" />
+        <div className="max-w-screen-sm">
+          <h4 className="text-lg font-bold mb-4">{product.title}</h4>
+          <p className="mb-4">{product.description}</p>
+          <p className="mb-3">${product.price.toFixed(2)}</p>
           <form action="" onSubmit={submitHandler}>
-            <input
-              type="number"
-              onChange={handleChange}
-              value={value}
-              min={1}
-              max={5}
-            />
-            <p>${product.price * value}</p>
+            <div className="flex">
+              <button
+                type="button"
+                className="w-5 h-5"
+                onClick={upButtonHandler}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  className="transform -rotate-90"
+                >
+                  <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" />
+                </svg>
+              </button>
+              <p className="w-6 text-center">{value}</p>
+              <button
+                type="button"
+                className="w-5 h-5"
+                onClick={downButtonHandler}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  className="transform rotate-90"
+                >
+                  <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" />
+                </svg>
+              </button>
+            </div>
             <button
               ref={submitButton}
-              className="w-32 bg-blue-300 rounded-lg p-2"
+              className="w-32 bg-blue-300 rounded-lg p-2 mt-4"
             >
               Add to Cart
             </button>
