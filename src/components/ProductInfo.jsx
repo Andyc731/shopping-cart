@@ -11,18 +11,19 @@ function ProductInfo(props) {
   function submitHandler(event) {
     event.preventDefault();
 
+    const TIMEOUT_OFFSET = 1700;
+
     props.setCartItems((prevCart) => [
       ...prevCart,
       { ...product, quantity: value, totalPrice: product.price * value },
     ]);
 
-    console.log("blah");
     submitButton.current.innerHTML = "&#10003;";
     submitButton.current.disabled = true;
     setTimeout(() => {
       submitButton.current.disabled = false;
       submitButton.current.innerHTML = "Add to Cart";
-    }, 2000);
+    }, TIMEOUT_OFFSET);
   }
 
   function handleChange(event) {
