@@ -30,10 +30,7 @@ function App() {
 
   return (
     <>
-      <div
-        className="h-screen grid"
-        style={{ gridTemplateRows: "80px 1fr 280px" }}
-      >
+      <div className="h-screen flex flex-col justify-between">
         <Header cartItems={cartItems} setCartItems={setCartItems}></Header>
         {loading && <h2>Loading...</h2>}
         {!loading && (
