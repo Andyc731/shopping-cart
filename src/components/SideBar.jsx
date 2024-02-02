@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function SideBar(props) {
   const categoryArray = [
     "All Products",
@@ -7,29 +9,38 @@ function SideBar(props) {
     "Electronics",
   ];
 
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
+
   const products = [...props.products];
 
   function categoryClickHandler(event) {
-    const newArray = [];
-    products.forEach((obj) => {
-      if (obj.category === event.target.textContent.toLowerCase()) {
-        newArray.push(obj);
-      }
-    });
+    const clickedCategory = event.target.textContent;
 
-    const setProducts = props.setProducts;
-    setProducts(newArray);
-
-    if (event.target.textContent === "All Products") {
-      setProducts(products);
+    if (clickedCategory === "All Products") {
+      setSelectedCategory(clickedCategory);
+      props.setProducts(products);
+    } else {
+      const newArray = products.filter(
+        (obj) => obj.category === clickedCategory.toLowerCase()
+      );
+      setSelectedCategory(clickedCategory);
+      props.setProducts(newArray);
     }
   }
 
   return (
-    <div className="bg-green-400 m-0">
+    <div className="bg-green-400 m-0 p-16">
       {categoryArray.map((category, index) => {
         return (
-          <button onClick={categoryClickHandler} key={index} className="block">
+          <button
+            onClick={categoryClickHandler}
+            key={index}
+            className={
+              selectedCategory === category
+                ? "font-bold block mt-2"
+                : "block mt-2"
+            }
+          >
             {category}
           </button>
         );
