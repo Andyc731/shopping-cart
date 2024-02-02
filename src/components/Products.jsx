@@ -8,7 +8,7 @@ function Products(props) {
   useEffect(() => {
     setDisplayProducts(props.products);
   }, [props.products]);
-  console.log(props.products, displayProducts);
+
   return (
     displayProducts && (
       <main className="grid" style={{ gridTemplateColumns: "300px 1fr" }}>
@@ -30,8 +30,8 @@ function Products(props) {
                 className="w-60 flex flex-col justify-between p-3 shadow-xl"
               >
                 <img src={item.image} alt="" className="h-60 object-contain" />
-                <p className="mt-auto mb-0">{item.title}</p>
-                <p>{item.price}</p>
+                <p className="mt-8">${item.price.toFixed(2)}</p>
+                <p className="mt-auto mb-0 h-6 overflow-hidden">{item.title}</p>
               </Link>
             );
           })}
