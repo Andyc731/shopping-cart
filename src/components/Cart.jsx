@@ -44,6 +44,9 @@ function Cart(props) {
     const updatedCart = [...props.cartItems];
     updatedCart.splice(index, 1);
     props.setCartItems(updatedCart);
+    if (updatedCart.length === 0) {
+      setTotalPrice(0);
+    }
   }
 
   function quantityChangeHandler(e, index, isIncrease) {
@@ -81,7 +84,7 @@ function Cart(props) {
       </div>
       <dialog
         ref={modal}
-        className={`lg:h-full lg:max-h-full lg:ml-auto lg:mr-0 lg:w-1/4 transition-transform w-full max-w-full h-2/4 mt-auto mb-0${
+        className={`lg:h-full lg:max-h-full lg:ml-auto lg:mr-0 lg:w-1/4 transition-transform w-full max-w-full h-2/4 mt-auto mb-0 duration-200${
           isDialogVisible
             ? ""
             : `transform ${
