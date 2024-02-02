@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import SelectBar from "./SelectBar";
 
 function Products(props) {
   const [displayProducts, setDisplayProducts] = useState([]);
+  const windowLarge = useMediaQuery({ minWidth: 1024 });
 
   useEffect(() => {
     setDisplayProducts(props.products);
@@ -11,11 +14,26 @@ function Products(props) {
 
   return (
     displayProducts && (
-      <main className="grid" style={{ gridTemplateColumns: "300px 1fr" }}>
-        <SideBar
-          products={props.products}
-          setProducts={setDisplayProducts}
-        ></SideBar>
+      <main
+        className="grid"
+        style={
+          windowLarge
+            ? { gridTemplateColumns: "300px 1fr" }
+            : { gridTemplateRows: "100px 1fr" }
+        }
+      >
+        {windowLarge && (
+          <SideBar
+            products={props.products}
+            setProducts={setDisplayProducts}
+          ></SideBar>
+        )}
+        {!windowLarge && (
+          <SelectBar
+            products={props.products}
+            setProducts={setDisplayProducts}
+          ></SelectBar>
+        )}
         <div
           className="mb-auto grid gap-8 p-7"
           style={{
