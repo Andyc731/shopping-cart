@@ -15,7 +15,7 @@ function Products(props) {
   return (
     displayProducts && (
       <main
-        className="grid"
+        className="grid flex-1"
         style={
           windowLarge
             ? { gridTemplateColumns: "300px 1fr" }
