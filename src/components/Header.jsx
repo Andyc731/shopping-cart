@@ -3,7 +3,7 @@ import Cart from "./Cart";
 
 function Header(props) {
   return (
-    <header className="flex justify-between bg-purple-300 items-center">
+    <header className="flex justify-between bg-purple-300 items-center max-h-20">
       <Link to="/">
         <div>logo</div>
       </Link>
