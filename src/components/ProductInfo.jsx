@@ -36,8 +36,12 @@ function ProductInfo(props) {
 
   return (
     product && (
-      <div className="flex w-9/12 ml-auto mr-auto p-10 items-center justify-around relative">
-        <img src={product.image} alt="" className="w-1/3 object-contain" />
+      <div className="flex lg:w-9/12 ml-auto mr-auto p-10 items-center justify-around relative">
+        <img
+          src={product.image}
+          alt=""
+          className="w-1/3 object-contain mr-16"
+        />
         <div className="max-w-screen-sm">
           <h4 className="text-lg font-bold mb-4">{product.title}</h4>
           <p className="mb-4">{product.description}</p>
