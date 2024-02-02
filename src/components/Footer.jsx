@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Footer() {
+function Footer(props) {
+  const products = [...props.products];
+  const newArray = [];
+  for (let i = 0; i < 5; i++) {
+    const randomNum = Math.floor(Math.random() * products.length);
+    newArray.push(products[randomNum]);
+  }
+
   return (
     <footer className="grid grid-cols-5 p-10 gap-10 bg-black text-white">
       <aside className="col-span-2">
@@ -17,31 +25,34 @@ function Footer() {
       </aside>
       <ul>
         <li>
-          <h3>Products</h3>
+          <h3 className="font-bold text-xl">Products</h3>
         </li>
-        <li>
-          <Link>product1</Link>
-        </li>
-        <li>
-          <Link>product2</Link>
-        </li>
-        <li>
-          <Link>product3</Link>
-        </li>
-        <li>
-          <Link>product4</Link>
-        </li>
-        <li>
-          <Link>product5</Link>
-        </li>
+        {props.loading && <p>Loading...</p>}
+        {!props.loading && (
+          <div>
+            {newArray.map((product, index) => {
+              return (
+                <Link
+                  key={index}
+                  to={`/products/${product.id}`}
+                  className="block"
+                >
+                  {product.title.length > 20
+                    ? product.title.substring(0, 20)
+                    : product.title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </ul>
 
       <ul>
         <li>
-          <h3>Help</h3>
+          <h3 className="font-bold text-xl">Help</h3>
         </li>
         <li>
-          <Link>About us</Link>
+          <Link to={"/about"}>About us</Link>
         </li>
         <li>
           <Link>FAQ</Link>
@@ -55,7 +66,7 @@ function Footer() {
       </ul>
       <ul>
         <li>
-          <h3>Contact</h3>
+          <h3 className="font-bold text-xl">Contact</h3>
         </li>
         <li>andychc731@gmail.com</li>
         <li>123-123-1234</li>
