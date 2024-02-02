@@ -11,12 +11,15 @@ import ProductInfo from "./components/ProductInfo";
 function App() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("https://fakestoreapi.com/products");
         const data = await response.json();
         setProducts(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -32,22 +35,27 @@ function App() {
         style={{ gridTemplateRows: "80px 1fr 280px" }}
       >
         <Header cartItems={cartItems} setCartItems={setCartItems}></Header>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/products"
-            element={<Products products={products} setProducts={setProducts} />}
-          />
-          <Route path="/about" element={<About />}></Route>
-          <Route path="*" element={<Navigate to="/" />}></Route>
-          <Route
-            path="/products/:id"
-            element={
-              <ProductInfo products={products} setCartItems={setCartItems} />
-            }
-          ></Route>
-        </Routes>
-        <Footer></Footer>
+        {loading && <h2>Loading...</h2>}
+        {!loading && (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/products"
+              element={
+                <Products products={products} setProducts={setProducts} />
+              }
+            />
+            <Route path="/about" element={<About />}></Route>
+            <Route path="*" element={<Navigate to="/" />}></Route>
+            <Route
+              path="/products/:id"
+              element={
+                <ProductInfo products={products} setCartItems={setCartItems} />
+              }
+            ></Route>
+          </Routes>
+        )}
+        <Footer loading={loading} products={products}></Footer>
       </div>
     </>
   );
