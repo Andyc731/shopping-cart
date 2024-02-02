@@ -10,7 +10,7 @@ function Footer(props) {
   }
 
   return (
-    <footer className="grid grid-cols-5 p-10 gap-10 bg-black text-white">
+    <footer className="grid lg:grid-cols-5 p-10 gap-10 bg-black text-white">
       <aside className="col-span-2">
         <div>logo</div>
         <p>

@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 function Cart(props) {
   const modal = useRef();
   const [totalPrice, setTotalPrice] = useState(0);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const windowLarge = useMediaQuery({ minWidth: 1024 });
 
   function showModal() {
     modal.current.showModal();
@@ -79,8 +81,12 @@ function Cart(props) {
       </div>
       <dialog
         ref={modal}
-        className={`h-full max-h-full ml-auto mr-0 w-1/4 transition-all ${
-          isDialogVisible ? "" : "transform translate-x-full"
+        className={`lg:h-full lg:max-h-full lg:ml-auto lg:mr-0 lg:w-1/4 transition-transform w-full max-w-full h-2/4 mt-auto mb-0${
+          isDialogVisible
+            ? ""
+            : `transform ${
+                windowLarge ? "translate-x-full" : "translate-y-full"
+              }`
         }`}
       >
         <div className="flex flex-col items-center justify-between min-h-full">
