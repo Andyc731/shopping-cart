@@ -74,7 +74,7 @@ function Cart(props) {
     <div>
       <div onClick={showModal} className="cursor-pointer">
         <img
-          src="/src/assets/shopping-cart.svg"
+          src="./src/assets/shopping-cart.svg"
           alt=""
           className="w-9 z-0 relative"
         />
