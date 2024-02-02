@@ -44,20 +44,24 @@ function Cart(props) {
     props.setCartItems(updatedCart);
   }
 
-  function quantityChange(e, index) {
-    const maxQuantity = 5;
-    const minQuantity = 1;
-
-    if (e.target.value > maxQuantity) e.target.value = maxQuantity;
-    if (e.target.value < minQuantity) e.target.value = minQuantity;
-    const value = e.target.value;
-
+  function quantityChangeHandler(e, index, isIncrease) {
     const updatedCart = [...props.cartItems];
-    updatedCart[index] = {
-      ...updatedCart[index],
-      quantity: value,
-      totalPrice: value * updatedCart[index].price,
-    };
+    const quant = parseFloat(updatedCart[index].quantity);
+
+    if (isIncrease && quant < 5) {
+      updatedCart[index] = {
+        ...updatedCart[index],
+        quantity: quant + 1,
+        totalPrice: (quant + 1) * updatedCart[index].price,
+      };
+    } else if (!isIncrease && quant > 1) {
+      updatedCart[index] = {
+        ...updatedCart[index],
+        quantity: quant - 1,
+        totalPrice: (quant - 1) * updatedCart[index].price,
+      };
+    }
+
     props.setCartItems(updatedCart);
   }
 
@@ -99,24 +103,28 @@ function Cart(props) {
                     <h4 className="w-48 h-6 overflow-hidden">{item.title}</h4>
                     <div className="flex justify-between">
                       <p>Per:</p>
-                      <p>${item.price}</p>
+                      <p>${item.price.toFixed(2)}</p>
                     </div>
                     <div className="flex justify-between">
                       <p>Quantity:</p>
-                      <input
-                        type="number"
-                        onChange={(e) => quantityChange(e, index)}
-                        className="appearance-none w-9"
-                        style={{
-                          direction: "rtl",
-                        }}
-                        value={item.quantity}
-                      />
+                      <p>{item.quantity}</p>
                     </div>
                     <div className="flex justify-between">
                       <p>Total:</p>
-                      <p>${item.totalPrice}</p>
+                      <p>${item.totalPrice.toFixed(2)}</p>
                     </div>
+                    <button
+                      className="bg-green-500 w-10"
+                      onClick={(e) => quantityChangeHandler(e, index, true)}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="bg-red-500 w-10"
+                      onClick={(e) => quantityChangeHandler(e, index, false)}
+                    >
+                      -
+                    </button>
                   </div>
                 </div>
               );
@@ -124,7 +132,7 @@ function Cart(props) {
           </div>
           <div className="flex justify-between w-9/12 mt-4">
             <p>Subtotal:</p>
-            <p className="">${totalPrice}</p>
+            <p className="">${totalPrice.toFixed(2)}</p>
           </div>
           <button className="w-3/4 bg-green-400 rounded-lg h-12 m-4">
             Checkout
