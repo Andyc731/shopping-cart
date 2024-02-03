@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import shoppingCart from "../assets/shopping-cart.svg";
 
 function Cart(props) {
   const modal = useRef();
@@ -73,11 +74,7 @@ function Cart(props) {
   return (
     <div>
       <div onClick={showModal} className="cursor-pointer">
-        <img
-          src="./src/assets/shopping-cart.svg"
-          alt=""
-          className="w-9 z-0 relative"
-        />
+        <img src={shoppingCart} alt="" className="w-9 z-0 relative" />
         <div className="-mt-4 ml-5 bg-red-500 rounded-full text-center p-1 w-5 h-5 flex justify-center items-center text-xs z-50 relative">
           {props.cartItems.length}
         </div>
