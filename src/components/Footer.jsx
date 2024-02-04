@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Footer(props) {
-  const products = [...props.products];
-  const newArray = [];
-  for (let i = 0; i < 5; i++) {
-    const randomNum = Math.floor(Math.random() * products.length);
-    newArray.push(products[randomNum]);
-  }
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    if (!props.products.length) {
+      return;
+    }
+    const randomArray = [];
+
+    while (randomArray.length < 5) {
+      const randomNum = Math.floor(Math.random() * props.products.length);
+      if (!randomArray.includes(props.products[randomNum])) {
+        randomArray.push(props.products[randomNum]);
+      }
+    }
+    setProducts(randomArray);
+  }, [props.products]);
 
   return (
     <footer className="grid lg:grid-cols-5 p-10 gap-10 bg-black text-white">
@@ -30,7 +39,7 @@ function Footer(props) {
         {props.loading && <p>Loading...</p>}
         {!props.loading && (
           <div>
-            {newArray.map((product, index) => {
+            {products.map((product, index) => {
               return (
                 <Link
                   key={index}
